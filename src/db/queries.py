@@ -1,7 +1,7 @@
 from psycopg import Cursor
 
 from src.db.postgres_lib import db
-from src.models.models import Author, Quote
+from src.models.models import Author, Partner, Quote
 
 def fetch_as_scalar(cursor: Cursor):
     value = cursor.fetchone()
@@ -72,3 +72,45 @@ def save_quote(cursor: Cursor, quote: Quote, authors: list[Author], version: int
     if row is not None:
         quote_id = row[0]
         __link_tags(cursor, tags_ids, quote_id)
+
+
+@db
+def save_partners(cursor: Cursor, partners: list[Partner]): #TODO update
+
+    query = """
+                INSERT INTO book_stores(
+                    name, 
+                    address, 
+                    zip_code, 
+                    city,
+                    latitude, 
+                    longitude,
+                    contact_name_hash, 
+                    contact_email_hash, 
+                    contact_phone,
+                    revenues_crypt, 
+                    partner_date, 
+                    speciality
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
+            """
+    
+    stores = [
+        (
+            p.book_store_name,
+            p.address,
+            p.zipcode,
+            p.city,
+            p.latitude if hasattr(p, "latitude") else None,
+            p.longitude if hasattr(p, "longitude") else None,
+            p.name,
+            p.email,
+            p.phone,
+            p.revenue,
+            p.partner_date,
+            p.speciality,
+        )
+        for p in partners
+    ]
+
+    cursor.executemany(query, stores)

@@ -41,6 +41,8 @@ class Partner:
     book_store_name: str
     address: str
     zipcode: str
+    longitude: float
+    latitude: float
     city: str
     name: str
     email: str
@@ -48,3 +50,5 @@ class Partner:
     revenue: float
     partner_date: date
     speciality: str
+
+    

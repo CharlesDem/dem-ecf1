@@ -1,9 +1,11 @@
 from enum import Enum
+import hashlib
 import io
 from typing import Optional
 from minio import Minio
 from minio.error import S3Error
 import structlog
+from src.models.models import Partner
 from src.config.minio_config import minio_config
 from minio.versioningconfig import VersioningConfig
 
@@ -131,3 +133,6 @@ class MinIOStorage:
             )
         except S3Error:
             return None
+
+
+   
