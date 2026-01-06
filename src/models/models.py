@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-
+from datetime import date
 
 @dataclass
 class Quote:
@@ -34,3 +34,17 @@ class Author:
             "born_location": self.born_location,
             "url": self.url
         }
+
+
+@dataclass  
+class Partner:
+    book_store_name: str
+    address: str
+    zipcode: str
+    city: str
+    name: str
+    email: str
+    phone: str
+    revenue: float
+    partner_date: date
+    speciality: str

@@ -58,7 +58,7 @@ class MinIOStorage:
 
     def upload(self, data_type: DataType, filename: str, data_bytes):
         try:
-            result = self.client.put_object(
+            self.client.put_object(
                 bucket_name= bucket_upload[data_type]["bucket"],
                 object_name=filename,
                 data=io.BytesIO(data_bytes),
@@ -66,11 +66,17 @@ class MinIOStorage:
                 content_type=bucket_upload[data_type]["content_type"]
             )
 
-            version_id = getattr(result, "version_id", None)
+            versions = self.client.list_objects(
+                bucket_name=bucket_upload[data_type]["bucket"],
+                prefix=filename,
+                recursive=True,
+                include_version=True 
+            )
+            version_number = sum(1 for v in versions if v.object_name == filename)
             
             return {
                         "url": f"minio://{minio_config.bucket_quotes}/{filename}",
-                        "version": version_id
+                        "version": version_number
             }
             
         except S3Error as e:

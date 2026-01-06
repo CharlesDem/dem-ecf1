@@ -17,6 +17,35 @@ services:
       timeout: 20s
       retries: 3
 
+  postgres:
+    depends_on:
+      - minio
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: silver_db
+    volumes: 
+      - postgres:/var/lib/postgresql
+      - ./src/db/init:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    depends_on:
+      - postgres
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pg_admin@pg.com
+      - PGADMIN_DEFAULT_PASSWORD=pg_admin
+    ports:
+      - 8080:80
+    volumes: 
+      - postgres:/var/lib/pgadmin
+
 
 volumes:
   minio_data:
+  postgres:
