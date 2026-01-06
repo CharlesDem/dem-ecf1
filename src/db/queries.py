@@ -114,3 +114,33 @@ def save_partners(cursor: Cursor, partners: list[Partner]): #TODO update
     ]
 
     cursor.executemany(query, stores)
+
+
+@db
+def save_books(cursor: Cursor, books: list, version: int):
+    query = """
+                INSERT INTO books(
+                    title,
+                    price,
+                    mark,
+                    availability,
+                    img_url,
+                    last_scrap_version
+                )
+                VALUES (%s, %s, %s, %s, %s, %s)
+                ON CONFLICT (title) DO NOTHING
+            """
+
+    books = [
+        (
+            b.title,
+            b.price,
+            b.mark,
+            b.availability,
+            b.img_url,
+            version
+        )
+        for b in books
+    ]
+
+    cursor.executemany(query, books)

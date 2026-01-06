@@ -51,4 +51,19 @@ class Partner:
     partner_date: date
     speciality: str
 
+@dataclass
+class Book:
+    title: str
+    price: float
+    mark: int
+    availability: bool
+    img_url: str
     
+    def to_dict(self) -> dict:
+        return {
+            "title": self.title,
+            "price": self.price,
+            "mark": self.mark,
+            "availability": self.availability,
+            "img_url": self.img_url,
+        }

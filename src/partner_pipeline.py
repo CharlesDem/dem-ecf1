@@ -6,11 +6,13 @@ import time
 from typing import Optional
 
 import pandas as pd
+import structlog
 from src.db.queries import save_partners
 from src.coordinates_helper import get_cordinates_from_address
 from src.models.models import Partner
 from src.minio_client import DataType, MinIOStorage
 
+logger = structlog.get_logger()
 
 class PartnerPipeline:
 
@@ -22,8 +24,7 @@ class PartnerPipeline:
 
     def __get_partners(self, bucket: str, filename: str) -> Optional[list[Partner]]:
         minio_client = MinIOStorage()
-        print(bucket)
-        print(filename)
+
         data = minio_client.get_object(bucket, filename)
         if data is None:
             return None
@@ -56,6 +57,10 @@ class PartnerPipeline:
     def save_partners(self):
         partners = self.__get_partners("client", "partenaire_librairies.xlsx")
 
+        if not partners:
+            logger.error("No data found")
+            return
+
         for p in partners:
             longitude, latitude = self.__get_coordinates(p.address)
             p.longitude = longitude
@@ -66,6 +71,11 @@ class PartnerPipeline:
 
 
         
+def main():
+    partner_pipeline = PartnerPipeline()
+    partner_pipeline.save_partners()
 
+if __name__=="__main__":
+    main()
 
 

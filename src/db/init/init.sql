@@ -22,9 +22,9 @@ CREATE TABLE books(
    price NUMERIC(8,2)  ,
    mark SMALLINT,
    availability BOOLEAN NOT NULL,
-   img_url VARCHAR(255) ,
+   img_url VARCHAR(255),
    last_scrap_version TEXT NOT NULL,
-   author_id INTEGER NOT NULL,
+   author_id INT NULL,
    PRIMARY KEY(book_id),
    UNIQUE(title),
    FOREIGN KEY(author_id) REFERENCES authors(author_id)

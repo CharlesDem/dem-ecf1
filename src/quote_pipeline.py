@@ -17,7 +17,7 @@ class QuotePipeline:
         try :
             quote_scraper = QuotesScraper()
             minio_client = MinIOStorage()
-            authors_quotes = quote_scraper.scrape_complete(1)
+            authors_quotes = quote_scraper.scrape_complete()
 
             authors = [a.to_dict() for a in authors_quotes.get("authors")]
             authors_json = json.dumps(authors, ensure_ascii=False, indent=2).encode("utf-8")
@@ -49,3 +49,11 @@ class QuotePipeline:
     def quotes(self):
         scrap_result = self.__scrap_quotes()
         self.__save_quotes(scrap_result)
+
+
+def main():
+    quote_pipeline = QuotePipeline()
+    quote_pipeline.quotes()
+    
+if __name__ == "__main__":
+    main()

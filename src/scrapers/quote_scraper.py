@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 import structlog
 
-from src.config.scraper_config import scraper_config
+from src.config.scraper_config import quote_scraper_config
 from src.models.models import Author, Quote
 
 logger = structlog.get_logger()
@@ -19,8 +19,8 @@ class QuotesScraper:
 
     
     def __init__(self):
-        self.base_url = scraper_config.base_url
-        self.delay = scraper_config.delay
+        self.base_url = quote_scraper_config.base_url
+        self.delay = quote_scraper_config.delay
         self.session = requests.Session()
         self.ua = UserAgent()
         self._setup_session()
@@ -49,7 +49,7 @@ class QuotesScraper:
         """
         try:
             logger.debug("fetching", url=url)
-            response = self.session.get(url, timeout=scraper_config.timeout)
+            response = self.session.get(url, timeout=quote_scraper_config.timeout)
             response.raise_for_status()
             
             # Politesse
@@ -148,7 +148,8 @@ class QuotesScraper:
         Yields:
             Objets Quote
         """
-        max_pages = max_pages or scraper_config.max_pages
+        max_pages = max_pages or quote_scraper_config.max_pages
+        print("max pages ", max_pages)
         page = 1
         url = self.base_url
         
@@ -239,7 +240,7 @@ class QuotesScraper:
     
     def scrape_complete(
         self,
-        max_pages: int = 100,
+        max_pages: int = 3,
     ) -> dict:
         """
         Scrape complet : citations + auteurs.
