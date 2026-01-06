@@ -5,7 +5,6 @@ from typing import Generator, Optional
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
 import requests
 import structlog
 from src.models.models import Book
@@ -21,14 +20,13 @@ class BookScraper:
         self.base_url = book_scraper_config.base_url
         self.delay = book_scraper_config.delay
         self.session = requests.Session()
-        self.ua = UserAgent()
         self._setup_session()
         
     
     def _setup_session(self) -> None:
         """Configure la session HTTP."""
         self.session.headers.update({
-            "User-Agent": self.ua.random,
+            "User-Agent": "scraper-2026-chd",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Language": "en-US,en;q=0.5",
             "Connection": "keep-alive"

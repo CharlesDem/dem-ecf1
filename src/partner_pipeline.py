@@ -39,7 +39,7 @@ class PartnerPipeline:
                 city=p["ville"],
                 longitude = None,
                 latitude = None,
-                name=self.__hash_data(p["contact_nom"]),
+                name=self.__hash_data(p["contact_nom"]), #TODO être sûr que ça apparait jamais dans les logs
                 email=self.__hash_data(p["contact_email"]),
                 phone=self.__hash_data(str(p["contact_telephone"])),
                 revenue=float(p["ca_annuel"]),
