@@ -15,8 +15,7 @@
                                  │
                    ┌─────────────▼─────────────┐
                    │   Traitements             │
-                   │ (normalisation)           │
-                   │  - anonymisation  clients │
+                   │  - anonymisation clients  │
                    │  - ajout geoloc           |
                    |  - nettoyage              │
                    └─────────────┬─────────────┘
@@ -24,5 +23,5 @@
                                  ▼
                        ┌──────────────────┐
                        │       SQL        │
-                       │ (PostgreSQL etc) │
+                       │ (PostgreSQL)     │
                        └──────────────────┘
