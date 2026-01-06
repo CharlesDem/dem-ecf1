@@ -73,5 +73,5 @@ Ils doivent être stockés dans un bucket sécurisé et faire l'objet d'un recue
  où elles sont stockées. L'application n'a pas à les utiliser et tous les traitements faits sur ces données 
  sont sur la base de comparaison. Un hachage de ces données permet de leur donner une forme cohérente 
  (vérifier leur cohérence) tout en rendant les informations personnelles inaccessibles.
-Idéalement seul le compte de service de production (et les personnes autorisées) devrait avoir accès au bucket.
+Seul le compte de service de production (et les personnes autorisées) ont accès au bucket.
 Pas l'équipe de développement.

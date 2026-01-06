@@ -16,7 +16,7 @@ class BookPipeline:
             res = book_scraper.scrape_complete()
             books = [b.to_dict() for b in res.get("books")]
             books_json = json.dumps(books, ensure_ascii=False, indent=2).encode("utf-8")
-            books_result = minio_client.upload(DataType.BOOK, "books/books.json", books_json)
+            books_result = minio_client.upload(DataType.BOOK, "books/books.json", books_json) #TODO trop compliqué avec l'enum
         
             return {
 

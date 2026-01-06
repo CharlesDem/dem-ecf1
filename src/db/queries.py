@@ -75,7 +75,7 @@ def save_quote(cursor: Cursor, quote: Quote, authors: list[Author], version: int
 
 
 @db
-def save_partners(cursor: Cursor, partners: list[Partner]): #TODO update
+def save_partners(cursor: Cursor, partners: list[Partner]): #TODO gérer le update
 
     query = """
                 INSERT INTO book_stores(

@@ -15,7 +15,7 @@ class PostgresPool:
             db_url: str = postgres_conf.database_url
             print(db_url)
             PostgresPool.pool = ConnectionPool(db_url, max_size=5, min_size=1)
-            atexit.register(lambda: PostgresPool.pool.close())
+            atexit.register(lambda: PostgresPool.pool.close()) #TODO pas sûr
 
     @staticmethod
     def get_conn() -> AbstractContextManager[Connection]:
